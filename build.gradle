@@ -1,0 +1,46 @@
+group 'com.naosim'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    ext.kotlin_version = '1.0.4'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: 'java'
+apply plugin:'application'
+apply plugin: "kotlin"
+sourceCompatibility = 1.8
+
+//mainClassName = "com.naosim.dddwork.Main"
+mainClassName = "com.naosim.dddwork.MainDDD"
+
+configurations {
+    provided
+}
+
+sourceSets {
+    main { compileClasspath += configurations.provided }
+}
+
+run {
+    if (project.hasProperty('args')) {    // "args" というプロパティが渡されていたら
+        args project.args.split(',')   // 空白文字で split して、 run タスクの args オプションにセットする
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    provided 'org.projectlombok:lombok:1.16.4'
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
